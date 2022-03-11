@@ -1,6 +1,6 @@
 name: Integracion con develop
 on:
-  push
+  push:
 jobs:
   job1:
     name: Pruebas
