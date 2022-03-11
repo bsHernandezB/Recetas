@@ -1,23 +1,22 @@
-name: Integracion con develop
+name: Pruebas unitarias
 on:
-  push
+  push:
+    branches: [ main ]
 jobs:
   job1:
     name: Pruebas
     runs-on: ubuntu-latest
+    outputs:
+      salida: ${{ steps.imprimir.outputs.respuesta }}
     steps:
+    - name: Checkout de repositorio
+      uses: actions/checkout@v2
     - name: Configuración de entorno de python
       uses: actions/setup-python@v2
       with:
           python-version: '3.7'
     - name: Instalación de librerías y dependencias
-      run:  |
+      run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Prueba dos
-      if: ${{ contains( github.ref , 'Ma' ) }}
-      env:
-        Mensaje: ${{ github.ref }}
-      run: 
-        echo ${Mensaje}
-      
+    
