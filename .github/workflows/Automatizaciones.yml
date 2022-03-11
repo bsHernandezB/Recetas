@@ -13,6 +13,6 @@ jobs:
           python-version: '3.7'
     - name: Prueba dos
       env:
-        Mensaje: 'hola'
+        Mensaje: ${{ github.ref }}
       run: echo ${Mensaje}
       
