@@ -1,7 +1,6 @@
 name: Integracion con develop
 on:
-  push:
-    branches: [ main ]
+  push
 jobs:
   job1:
     name: Pruebas
