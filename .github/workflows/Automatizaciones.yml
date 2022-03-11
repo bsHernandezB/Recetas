@@ -1,7 +1,6 @@
 name: Integracion con develop
 on:
-  push:
-   branches: [ main ]
+  push
 jobs:
   job1:
     name: Pruebas
@@ -15,9 +14,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Integracion Rama develop
+    - name: Prueba dos
+      if: ${{ contains( github.ref , 'Ma' ) }}
       env:
-        MENSAJE_EXITO: ${{ github.ref }}
-      run: echo "::set-output name=respuesta::${MENSAJE_EXITO}"
-        
-        
+        Mensaje: ${{ github.ref }}
+      run: 
+        echo ${Mensaje}
+      
