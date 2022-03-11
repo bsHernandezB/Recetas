@@ -12,7 +12,9 @@ jobs:
       with:
           python-version: '3.7'
     - name: Prueba dos
+      if: ${{ contains( github.ref , 'Ma' ) }}
       env:
         Mensaje: ${{ github.ref }}
-      run: echo ${Mensaje}
+      run: 
+        echo ${Mensaje}
       
