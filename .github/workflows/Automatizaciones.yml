@@ -1,7 +1,7 @@
 name: Integracion con develop
 on:
   push:
-   branches: [ main ]
+    branches: [ main ]
 jobs:
   job1:
     name: Pruebas
@@ -17,7 +17,7 @@ jobs:
         pip install -r requirements.txt
     - name: Integracion Rama develop
       env:
-        MENSAJE_EXITO: ${{ github.ref }}
+        MENSAJE_EXITO: hola
       run: echo "hola"
         
         
