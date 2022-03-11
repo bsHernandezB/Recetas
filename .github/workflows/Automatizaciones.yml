@@ -18,6 +18,6 @@ jobs:
     - name: Integracion Rama develop
       env:
         MENSAJE_EXITO: ${{ github.ref }}
-      run: echo "${MENSAJE_EXITO}"
+      run: echo "hola"
         
         
