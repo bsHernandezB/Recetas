@@ -1,4 +1,4 @@
-name: Pruebas unitarias
+name: Automatizaciones Pruebas unitarias
 on:
   push:
     branches:
