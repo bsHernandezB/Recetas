@@ -38,13 +38,13 @@ jobs:
       run: python -m unittest -v tests/test_prueba.py
       
     - name: Validar resultado con errores
-      if: ${{ failure() }}
+      if: ${{ failure() && (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
       env:
         MENSAJE_ERROR: Una o varias pruebas fallaron
       run: echo "${MENSAJE_ERROR}"
       
     - name: Validar resultado sin errores
-      if: ${{ success() }}
+      if: ${{ success() && (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
       env:
         MENSAJE_EXITO: Todas las pruebas fueron exitosas
       run: echo "${MENSAJE_EXITO}"
