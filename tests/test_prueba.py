@@ -1,7 +1,7 @@
 import unittest
 
 class PruebaTestCase(unittest.TestCase):
-    def setUp():
+    def setUp(self):
         validacion = "hola"
 
     def test_error(self):
