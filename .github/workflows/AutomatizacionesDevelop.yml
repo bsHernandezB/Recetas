@@ -39,6 +39,14 @@ jobs:
         git checkout -b release
         git push -f -u origin develop
 
+    - name: Prueba
+      if: ${{ (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: "develop"
+        target-branch: "release"
+
     - name: Correr pruebas
       id: correr-pruebas
       if: ${{ (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
