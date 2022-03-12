@@ -34,7 +34,7 @@ jobs:
     steps:
     - name: Correr pruebas
       id: correr-pruebas
-      if: ${{ (contains( needs.job1.outputs.salida , 'ContinuarDevelop' ) }}
+      if: ${{ (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
       run: python -m unittest -v tests/test_prueba.py
       
     - name: Validar resultado con errores
