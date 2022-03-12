@@ -20,7 +20,7 @@ jobs:
         pip install -r requirements.txt
         
     - name: Integracion con rama develop
-      if: ${{ contains( github.ref , 'feature' ) }}
+      if: ${{ (contains( github.ref , 'feature' )) && (contains( github.event.head_commit.message , 'DEV:')) }}
       env:
         NombreRama: ${{ github.ref }}
       run: echo "Hizo Push en la rama feature"
