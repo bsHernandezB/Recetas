@@ -45,7 +45,7 @@ jobs:
         MENSAJE_ERROR: Una o varias pruebas fallaron
       run: echo "${MENSAJE_ERROR}"
       
-    - name: Validar resultado sin errores
+    - name: Validar resultado sin errores y hacer merge con develop
       if: ${{ success() && (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
       uses: tukasz/direct-merge-action@master
       with:
