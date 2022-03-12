@@ -1,8 +1,7 @@
-name: Pruebas unitarias
+name: Automatizaciones develop
 on:
   push:
-    branches:
-      - 'develop**'
+    branches: [ develop ]
 jobs:
   job1:
     name: Validacion Commit
