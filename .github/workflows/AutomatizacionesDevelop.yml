@@ -36,8 +36,8 @@ jobs:
     - name: Crear nueva rama Release y combinar con develop
       if: ${{ (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
       run: |
-        git checkout -b develop
-        git push -f -u release
+        git checkout -b release
+        git push -f -u develop
 
     - name: Correr pruebas
       id: correr-pruebas
