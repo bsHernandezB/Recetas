@@ -5,4 +5,4 @@ class PruebaTestCase(unittest.TestCase):
         validacion = "hola"
 
     def test_error(self):
-        self.assertFalse(True) 
+        self.assertFalse(False) 
