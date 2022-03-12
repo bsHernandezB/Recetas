@@ -23,13 +23,7 @@ jobs:
       if: ${{ (contains( github.ref , 'feature' )) && (contains( github.event.head_commit.message , 'DEV:')) }}
       env:
         NombreRama: ${{ github.ref }}
-      run: |
-        python -m unittest -v tests/test_prueba.py
-        if ${{ failure() }} then
-          echo "Una o varias pruebas fallaron"
-        else
-          echo "Las pruebas pasaron"
-        fi
+      run: python -m unittest -v tests/test_prueba.py
       
     - name: Validacion fallo prueba
       if: ${{ failure() }}
