@@ -1,12 +1,26 @@
 name: Pruebas unitarias
 on:
-  push
+  push:
+    branches:
+      - 'feature**'
 jobs:
   job1:
-    name: Pruebas
+    name: Validacion Commit
     runs-on: ubuntu-latest
     outputs:
-      salida: ${{ steps.imprimir.outputs.respuesta }}
+      salida: ${{ steps.RamaDevelop.outputs.respuesta }}
+    steps:   
+    - name: Integracion con rama develop
+      id: RamaDevelop
+      if: ${{ (contains( github.event.head_commit.message , 'DEV:')) }}
+      env:
+        VARIABLE: "ContinuarDevelop"
+      run: echo "::set-output name=respuesta::${VARIABLE}"
+      
+  job2:
+    needs: job1
+    name: Validacion Pruebas
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout de repositorio
       uses: actions/checkout@v2
@@ -14,19 +28,28 @@ jobs:
       uses: actions/setup-python@v2
       with:
           python-version: '3.7'
+          
     - name: Instalación de librerías y dependencias
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        
-    - name: Integracion con rama develop
-      if: ${{ contains( github.ref , 'feature' ) }}
-      env:
-        NombreRama: ${{ github.ref }}
-      run: echo "Hizo Push en la rama feature"
+    
+    - name: Correr pruebas
+      id: correr-pruebas
+      if: ${{ (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
+      run: python -m unittest -v tests/test_prueba.py
       
-    - name: Integracion con rama release
-      if: ${{ contains( github.ref , 'develop' ) }}
+    - name: Validar resultado con errores
+      if: ${{ failure() && (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
       env:
-        NombreRama: ${{ github.ref }}
-      run: echo "Hizo Push en la rama develop"
+        MENSAJE_ERROR: Una o varias pruebas fallaron
+      run: echo "${MENSAJE_ERROR}"
+      
+    - name: Validar resultado sin errores
+      if: ${{ success() && (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: ${{ github.ref }}
+        target-branch: "develop"
+      
