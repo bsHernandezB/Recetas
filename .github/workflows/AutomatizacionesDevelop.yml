@@ -15,7 +15,7 @@ jobs:
       env:
         VARIABLE: "ContinuarDevelop"
       run: echo "::set-output name=respuesta::${VARIABLE}"
-	      
+
   job2:
     needs: job1
     name: Validacion Pruebas develop
