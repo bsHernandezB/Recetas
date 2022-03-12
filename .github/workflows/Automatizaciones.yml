@@ -32,7 +32,21 @@ jobs:
     name: Mi segundo job
     runs-on: ubuntu-latest
     steps:
-    - name: Imprimir
-      id: imprimir
-      run: echo ${{needs.job1.outputs.salida}}
+    - name: Correr pruebas
+      id: correr-pruebas
+      if: ${{ (contains( needs.job1.outputs.salida , 'ContinuarDevelop' ) }}
+      run: python -m unittest -v tests/test_prueba.py
+      
+    - name: Validar resultado con errores
+      if: ${{ failure() }}
+      env:
+        MENSAJE_ERROR: Una o varias pruebas fallaron
+      run: echo "${MENSAJE_ERROR}"
+      
+    - name: Validar resultado sin errores
+      if: ${{ success() }}
+      env:
+        MENSAJE_EXITO: Todas las pruebas fueron exitosas
+      run: echo "${MENSAJE_EXITO}"
+
 
