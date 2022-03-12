@@ -37,7 +37,7 @@ jobs:
       if: ${{ (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
       run: |
         git checkout -b release
-        git push -f -u origin develop
+        git push -f -u release
 
     - name: Correr pruebas
       id: correr-pruebas
