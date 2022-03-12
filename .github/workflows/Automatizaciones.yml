@@ -5,7 +5,7 @@ on:
       - 'feature**'
 jobs:
   job1:
-    name: Pruebas
+    name: Validacion Commit
     runs-on: ubuntu-latest
     outputs:
       salida: ${{ steps.RamaDevelop.outputs.respuesta }}
@@ -19,7 +19,7 @@ jobs:
       
   job2:
     needs: job1
-    name: Mi segundo job
+    name: Validacion Pruebas
     runs-on: ubuntu-latest
     steps:
     - name: Checkout de repositorio
@@ -47,8 +47,9 @@ jobs:
       
     - name: Validar resultado sin errores
       if: ${{ success() && (contains( needs.job1.outputs.salida , 'ContinuarDevelop' )) }}
-      env:
-        MENSAJE_EXITO: Todas las pruebas fueron exitosas
-      run: echo "${MENSAJE_EXITO}"
-
-
+      uses: tukasz/direct-merge-action@master
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: ${{ github.ref }}
+        target-branch: "develop"
+      
