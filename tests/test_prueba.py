@@ -6,4 +6,3 @@ class PruebaTestCase(unittest.TestCase):
 
     def test_error(self):
         self.assertFalse(False)
-
